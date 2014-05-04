@@ -32,7 +32,7 @@ class Persona(models.Model):
     Municipio = models.ForeignKey(Ciudad)
     Telefono = models.IntegerField()
     def __unicode__(self):
-        return u'%s %s %s' % (self.Nombre, self.Apellido1, self.Apellido2)
+        return u'%s %s' % (self.Nombre, self.Apellido1)
 
 class Forma_Pago(models.Model):
     Tipo = models.CharField(max_length=25)
