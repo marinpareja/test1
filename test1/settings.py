@@ -91,5 +91,5 @@ DATE_INPUT_FORMATS = ('%d-%m-%Y',)
 
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'static')
 
-MEDIA_URL = '/static/'
+MEDIA_URL = '/media/'
 STATIC_URL = '/static/'

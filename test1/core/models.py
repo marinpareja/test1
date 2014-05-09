@@ -33,6 +33,9 @@ class PayPal(models.Model):
     def __unicode__(self):
         return self.Email
     
+    class Meta:
+        verbose_name_plural = "PayPal"
+            
 class Transferencia(models.Model):
     Nombre = models.ForeignKey(Nombre, blank = True)
     Apellido1 = models.ForeignKey(Apellido, related_name="Transf_Apellido1", blank = True)
@@ -51,7 +54,10 @@ class SMS(models.Model):
     Cantidad = models.FloatField()
     def __unicode__(self):
         return self.Tipo      
-        
+    
+    class Meta:
+        verbose_name_plural = "SMS"
+                
 class Persona_Empresa(models.Model):
     Id = models.AutoField(primary_key = True)
     NIF_CIF = models.CharField(max_length=15, blank = True)
@@ -72,6 +78,10 @@ class Persona_Empresa(models.Model):
     def __unicode__(self):
         return u'%s %s %s' % (self.Nombre, self.Apellido1, self.Apellido2)
 
+    class Meta:
+        verbose_name = "Persona o Empresa"
+        verbose_name_plural = "Personas o Empresas"
+        
 class Lugar(models.Model):
     Lugar = models.CharField(max_length=50)
     def __unicode__(self):
@@ -83,7 +93,10 @@ class Tipo_Servicio(models.Model):
     Precio = models.FloatField()
     def __unicode__(self):
         return self.Nombre  
-        
+
+    class Meta:
+        verbose_name_plural = "Lugares"
+                
 class Cliente(models.Model):
     Id = models.AutoField(primary_key = True)
     Nombre = models.ForeignKey(Nombre)
