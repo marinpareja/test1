@@ -24,15 +24,25 @@ class Ciudad(models.Model):
     CP = models.IntegerField(primary_key = True)
     def __unicode__(self):
         return self.Municipio
-
+    
+    class Meta:
+        verbose_name_plural = "Ciudades"
+        
 class PayPal(models.Model):
     Email = models.CharField(max_length=75)
     def __unicode__(self):
         return self.Email
     
 class Transferencia(models.Model):
-    Nombre = models.CharField(max_length=50)
-    Concepto = models.CharField(max_length=100)
+    Nombre = models.ForeignKey(Nombre, blank = True)
+    Apellido1 = models.ForeignKey(Apellido, related_name="Transf_Apellido1", blank = True)
+    Apellido2 = models.ForeignKey(Apellido, related_name="Transf_Apellido2", blank = True)    
+    IBAN = models.CharField(max_length=4)
+    Entidad = models.IntegerField(max_length=4)
+    Sucursal = models.IntegerField(max_length=4)
+    Control = models.IntegerField(max_length=2)
+    Numero = models.IntegerField(max_length=10)
+
     def __unicode__(self):
         return self.Nombre
 
@@ -44,20 +54,20 @@ class SMS(models.Model):
         
 class Persona_Empresa(models.Model):
     Id = models.AutoField(primary_key = True)
-    NIF_CIF = models.CharField(max_length=15)
+    NIF_CIF = models.CharField(max_length=15, blank = True)
     IsEmpresa = models.BinaryField()
-    Nombre_Emp = models.CharField(max_length=50)
-    Nombre_Per = models.ForeignKey(Nombre)
-    Apellido1 = models.ForeignKey(Apellido, related_name="Persona_Apellido1")
-    Apellido2 = models.ForeignKey(Apellido, related_name="Persona_Apellido2")
-    Domicilio = models.CharField(max_length=50)
-    Municipio = models.ForeignKey(Ciudad)
-    Telefono = models.IntegerField(max_length=15)
-    Contacto = models.ManyToManyField("self")
+    Nombre_Emp = models.CharField(max_length=50, blank = True)
+    Nombre_Per = models.ForeignKey(Nombre, blank = True)
+    Apellido1 = models.ForeignKey(Apellido, related_name="Persona_Apellido1", blank = True)
+    Apellido2 = models.ForeignKey(Apellido, related_name="Persona_Apellido2", blank = True)
+    Domicilio = models.CharField(max_length=50, blank = True)
+    Municipio = models.ForeignKey(Ciudad, blank = True)
+    Telefono = models.IntegerField(max_length=15, blank = True)
+    Contacto = models.ManyToManyField("self", blank = True)
     
-    Pago_Pay = models.ManyToManyField(PayPal)
-    Transferencia = models.ManyToManyField(Transferencia)
-    SMS = models.ManyToManyField(SMS)
+    Pago_Pay = models.ManyToManyField(PayPal, blank = True)
+    Transferencia = models.ManyToManyField(Transferencia, blank = True)
+    SMS = models.ManyToManyField(SMS, blank = True)
 
     def __unicode__(self):
         return u'%s %s %s' % (self.Nombre, self.Apellido1, self.Apellido2)
@@ -70,19 +80,18 @@ class Lugar(models.Model):
 class Tipo_Servicio(models.Model):
     Id = models.AutoField(primary_key = True) #El precio de un servicio puede variar
     Nombre = models.CharField(max_length=25)
-    Tiempo = models.IntegerField()
-    Multip = models.FloatField()
+    Precio = models.FloatField()
     def __unicode__(self):
         return self.Nombre  
         
 class Cliente(models.Model):
     Id = models.AutoField(primary_key = True)
     Nombre = models.ForeignKey(Nombre)
-    Apellido1 = models.ForeignKey(Apellido, related_name="Cliente_Apellido1")
-    Apellido2 = models.ForeignKey(Apellido, related_name="Cliente_Apellido2")
-    FechaNaci = models.DateField()
-    FechaServicio = models.DateField()
-    Domicilio =models.CharField(max_length=250)
+    Apellido1 = models.ForeignKey(Apellido, related_name="Cliente_Apellido1", blank = True)
+    Apellido2 = models.ForeignKey(Apellido, related_name="Cliente_Apellido2", blank = True)
+    FechaNaci = models.DateField(blank = True)
+    FechaServicio = models.DateField(blank = True)
+    Domicilio = models.CharField(max_length=250)
     Lugar = models.ForeignKey(Lugar)
     Municipio = models.ForeignKey(Ciudad)
     Tipo_Servicio = models.ForeignKey(Tipo_Servicio)
@@ -110,10 +119,10 @@ class Servicio(models.Model):
     Persona_Empresa = models.ForeignKey(Persona_Empresa, related_name="Persona_Empresa")
     Cliente = models.ForeignKey(Cliente)
     Empleado = models.ForeignKey(Empleado)
-    FechaSolicitud = models.DateField()
-    FechaServicio = models.DateTimeField()
-    FotoAntes = models.FilePathField()
-    FotoDespues = models.FilePathField()
+    FechaSolicitud = models.DateTimeField()
+    FechaServicio = models.DateTimeField(blank = True)
+    FotoAntes = models.ImageField(upload_to='before/', blank = True)
+    FotoDespues = models.ImageField(upload_to='after/',blank = True)
     Tipo_Servicio = models.ForeignKey(Tipo_Servicio)
     def __unicode__(self):
         return u'%s %s %s' % (self.Empleado, self.Cliente, self.FechaServicio)
