@@ -76,7 +76,7 @@ class Persona_Empresa(models.Model):
     SMS = models.ManyToManyField(SMS, blank = True)
 
     def __unicode__(self):
-        return u'%s %s %s' % (self.Nombre, self.Apellido1, self.Apellido2)
+        return u'%s %s %s' % (self.Nombre_Per, self.Apellido1, self.Apellido2)
 
     class Meta:
         verbose_name = "Persona o Empresa"
