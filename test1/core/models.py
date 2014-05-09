@@ -46,8 +46,6 @@ class Transferencia(models.Model):
     Control = models.IntegerField(max_length=2)
     Numero = models.IntegerField(max_length=10)
 
-    def __unicode__(self):
-        return self.Nombre
 
 class SMS(models.Model):
     Tipo = models.CharField(max_length=25)
