@@ -63,7 +63,7 @@ DATABASES = {
         'NAME': 'sql238823',
         'USER': 'sql238823',
         'PASSWORD': 'nF2*sK7%',
-        'HOST': 'sql2.freemysqlhosting.net',   # Or an IP Address that your DB is hosted on
+        'HOST': 'db4free.net',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }
@@ -71,6 +71,7 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
+DEFAULT_CHARSET = 'utf-8'
 
 LANGUAGE_CODE = 'es-ES'
 
@@ -82,6 +83,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+# E-mail
+DEFAULT_FROM_EMAIL = 'marinpareja@gmail.com'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
