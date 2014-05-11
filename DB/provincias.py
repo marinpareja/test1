@@ -25,6 +25,7 @@ with open('provincias.csv', 'rb') as f:
             cursor.execute(add_provincia, data_provincia)
             
         except:
+            db_duplicate = db_duplicate + 1
             print 'Existe:  %i, %s ' % (iProvincia, value)
             cursor.execute(update_provincia, data_provincia)
         

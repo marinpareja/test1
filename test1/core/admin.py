@@ -2,27 +2,29 @@ from django.contrib import admin
 from test1.core.models import *
 # Register your models here.
 
-class CiudadAdmin(admin.ModelAdmin):
-    list_display = ('Municipio', 'Ciudad', 'Provincia')
-    search_fields = ('Municipio', 'Ciudad', 'Provincia')
+class MunicipioAdmin(admin.ModelAdmin):
+    list_display = ('Municipio', 'Provincia', 'CP')
+    search_fields = ('Municipio', 'Provincia__Provincia', 'CP')
 
 class NombreAdmin(admin.ModelAdmin):
-    ordering = ('Nombre')  
+    list_display = ('Nombre',)
+    search_fields = ('Nombre',) 
 
 class ApellidoAdmin(admin.ModelAdmin):
-    ordering = ('Apellido')  
-
+    list_display = ('Apellido',)
+    search_fields = ('Apellido',)
+    
 class ProvinciaAdmin(admin.ModelAdmin):
-    list_display = ('id', 'Provincia')
-    search_fields = ('id', 'Provincia')
+    list_display = ('Provincia','id')
+    search_fields = ('Provincia','id')
     #ordering = ('Provincia') 
 
     
-admin.site.register(Nombre)
-admin.site.register(Apellido)
+admin.site.register(Nombre, NombreAdmin)
+admin.site.register(Apellido, ApellidoAdmin)
 admin.site.register(Persona_Empresa)
 admin.site.register(Provincia, ProvinciaAdmin)
-admin.site.register(Ciudad, CiudadAdmin)
+admin.site.register(Municipio, MunicipioAdmin)
 admin.site.register(PayPal)
 admin.site.register(Transferencia)
 admin.site.register(SMS)

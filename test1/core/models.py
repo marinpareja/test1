@@ -26,16 +26,18 @@ class Provincia(models.Model):
     def __unicode__(self):
         return unicode(self.Provincia)
     
-class Ciudad(models.Model):
+    class Meta:
+        ordering = ['Provincia']
+    
+class Municipio(models.Model):
     Municipio = models.CharField(max_length=50)
-    Ciudad = models.CharField(max_length=50)
     Provincia = models.ForeignKey(Provincia)
     CP = models.IntegerField(max_length=5)
     def __unicode__(self):
         return unicode(self.Municipio)
     
     class Meta:
-        verbose_name_plural = "Ciudades"
+        verbose_name_plural = "Municipios"
         ordering = ['Municipio']
         
 class PayPal(models.Model):
@@ -76,7 +78,7 @@ class Persona_Empresa(models.Model):
     Apellido1 = models.ForeignKey(Apellido, related_name="Persona_Apellido1", blank = True, verbose_name='Primer Apellido')
     Apellido2 = models.ForeignKey(Apellido, related_name="Persona_Apellido2", blank = True, verbose_name='Segundo Apellido')
     Domicilio = models.CharField(max_length=50, blank = True)
-    Municipio = models.ForeignKey(Ciudad, blank = True)
+    Municipio = models.ForeignKey(Municipio, blank = True)
     Telefono = models.IntegerField(max_length=15, blank = True, verbose_name='Teléfono')
     Contacto = models.ManyToManyField("self", blank = True, verbose_name='Persona de Contacto')
     Email = models.EmailField(blank = True)
@@ -95,7 +97,7 @@ class Persona_Empresa(models.Model):
         
 class Lugar(models.Model):
     Lugar = models.CharField(max_length=50)
-    Municipio = models.ForeignKey(Ciudad)
+    Municipio = models.ForeignKey(Municipio)
     URL = models.URLField()
     def __unicode__(self):
         return self.Lugar
@@ -125,7 +127,7 @@ class Cliente(models.Model):
     FechaF = models.DateField(blank = True, verbose_name='Fecha del Servicio')
     Domicilio = models.CharField(max_length=250)
     Lugar = models.ForeignKey(Lugar)
-    Municipio = models.ForeignKey(Ciudad)
+    Municipio = models.ForeignKey(Municipio)
     Tipo_Servicio = models.ForeignKey(Tipo_Servicio)
     def __unicode__(self):
         return u'%s %s %s' % (self.Nombre, self.Apellido1, self.Apellido2)
